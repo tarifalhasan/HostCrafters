@@ -69,11 +69,11 @@ export default function Pricing() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-12 gap-6 items-start">
           {/* Features List */}
-          <div className="col-span-12 lg:col-span-3">
-            <h2 className="text-3xl font-bold text-[#333331] mb-8">
+          <div className="col-span-12 ">
+            <h2 className="text-3xl text-center font-bold text-[#333331] mb-8">
               What&apos;s included?
             </h2>
-            <ul className="space-y-4 text-[#757575] text-base lg:text-lg">
+            <ul className="space-y-4 hidden text-[#757575] text-base lg:text-lg">
               <li>No Of Websites</li>
               <li>FREE 1 year domain registration</li>
               <li>One-click WordPress installs</li>
@@ -84,7 +84,7 @@ export default function Pricing() {
           </div>
 
           {/* Plans Section */}
-          <div className="col-span-12 lg:col-span-9">
+          <div className="col-span-12 ">
             {/* Mobile Carousel */}
             {isMobile ? (
               <>
@@ -116,7 +116,7 @@ export default function Pricing() {
               </>
             ) : (
               // Desktop Grid
-              <div className="grid md:grid-cols-3 gap-2">
+              <div className="grid md:grid-cols-3 gap-4">
                 {plans.map((plan, index) => (
                   <PricingCard
                     title={plan.name}
