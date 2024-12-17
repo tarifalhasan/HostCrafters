@@ -1,4 +1,7 @@
-import Link from "next/link";
+"use client";
+import useEmblaCarousel from "embla-carousel-react";
+import { useEffect, useState } from "react";
+import PricingCard from "./PricingCard";
 
 export default function Pricing() {
   const plans = [
@@ -40,10 +43,32 @@ export default function Pricing() {
     },
   ];
 
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Update current slide index
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    emblaApi.on("select", onSelect);
+    onSelect(); // Set the initial index
+  }, [emblaApi]);
+
+  // Check for mobile screen
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <section className="bg-white py-24" id="plans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-12 gap-6  items-center">
+        <div className="grid grid-cols-12 gap-6 items-start">
+          {/* Features List */}
           <div className="col-span-12 lg:col-span-3">
             <h2 className="text-3xl font-bold text-[#333331] mb-8">
               What&apos;s included?
@@ -57,34 +82,52 @@ export default function Pricing() {
               <li>Bandwidth & disk space</li>
             </ul>
           </div>
-          <div className="grid col-span-12 lg:col-span-9 md:grid-cols-3 gap-6">
-            {plans.map((plan) => (
-              <div key={plan.name} className="bg-navy-800 p-6 rounded-lg">
-                <h3 className="text-xl font-bold text-white mb-4">
-                  {plan.name}
-                </h3>
-                <p className="text-blue-400 text-2xl font-bold mb-6">
-                  {plan.price}
-                </p>
-                <ul className="space-y-4 mb-6">
-                  {plan.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className="text-gray-300 flex items-center"
-                    >
-                      <span className="text-blue-400 mr-2">✓</span>
-                      {feature}
-                    </li>
+
+          {/* Plans Section */}
+          <div className="col-span-12 lg:col-span-9">
+            {/* Mobile Carousel */}
+            {isMobile ? (
+              <>
+                <div className="overflow-hidden" ref={emblaRef}>
+                  <div className="flex">
+                    {plans.map((plan, index) => (
+                      <PricingCard
+                        title={plan.name}
+                        price={plan.price}
+                        features={plan.features}
+                        icon="/icons/medium.svg"
+                        key={index}
+                      />
+                    ))}
+                  </div>
+                </div>
+                {/* Dots */}
+                <div className="flex justify-center mt-4">
+                  {plans.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => emblaApi && emblaApi.scrollTo(index)}
+                      className={`w-3 h-3 rounded-full mx-1 ${
+                        selectedIndex === index ? "bg-blue-600" : "bg-gray-300"
+                      }`}
+                    ></button>
                   ))}
-                </ul>
-                <Link
-                  href="#buy-now"
-                  className="block text-center bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Buy Now →
-                </Link>
+                </div>
+              </>
+            ) : (
+              // Desktop Grid
+              <div className="grid md:grid-cols-3 gap-2">
+                {plans.map((plan, index) => (
+                  <PricingCard
+                    title={plan.name}
+                    price={plan.price}
+                    features={plan.features}
+                    icon="/icons/medium.svg"
+                    key={index}
+                  />
+                ))}
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

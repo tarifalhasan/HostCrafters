@@ -7,7 +7,7 @@ import SignInAction from "./signIn";
 export default async function Header() {
   const session = await { user: "dfdfd" };
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-navy-900/95 backdrop-blur-sm">
+    <header className=" sticky top-0 left-0 right-0 z-50 bg-navy-900/95 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
