@@ -1,19 +1,14 @@
-"use client";
-
-import {
-  Sheet,
-  SheetContent,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"; // Shadcn UI
-import { Menu } from "lucide-react"; // Lucide icon for hamburger menu
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import MobileNavSheet from "./MobileNavSheet";
 import SignInAction from "./signIn";
 
-export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default async function Header() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   return (
     <header className="fixed top-0 left-0 bg-[#080f2c]/90 right-0 z-50 backdrop-blur-sm ">
@@ -28,7 +23,7 @@ export default function Header() {
                 width={250}
                 height={32}
               />
-              <span className="text-white text-xl  sr-only font-bold">
+              <span className="text-white text-xl sr-only font-bold">
                 HostCrafters
               </span>
             </Link>
@@ -36,95 +31,27 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              href="/"
-              className="text-white hover:text-blue-400 transition-colors"
-            >
+            <Link href="/" className="text-white hover:text-blue-400">
               Home
             </Link>
-            <Link
-              href="#features"
-              className="text-white hover:text-blue-400 transition-colors"
-            >
+            <Link href="#features" className="text-white hover:text-blue-400">
               Features
             </Link>
-            <Link
-              href="#plans"
-              className="text-white hover:text-blue-400 transition-colors"
-            >
+            <Link href="#plans" className="text-white hover:text-blue-400">
               Plans
             </Link>
-            <Link
-              href="#contact"
-              className="text-white hover:text-blue-400 transition-colors"
-            >
+            <Link href="#contact" className="text-white hover:text-blue-400">
               Contact Us
             </Link>
-            <Link
-              href="/profile"
-              className="text-white hover:text-blue-400 transition-colors"
-            >
+            <Link href="/profile" className="text-white hover:text-blue-400">
               Profile
             </Link>
             <SignInAction />
           </nav>
 
-          {/* Mobile Navigation (Sheet) */}
+          {/* Mobile Navigation */}
           <div className="md:hidden flex items-center">
-            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-              <SheetTrigger asChild>
-                <button
-                  onClick={() => setIsMenuOpen(true)}
-                  className="text-white hover:text-blue-400"
-                >
-                  <Menu size={28} />
-                </button>
-              </SheetTrigger>
-              <SheetContent side="left" className="bg-gray-900 text-white">
-                <SheetTitle></SheetTitle>
-
-                <nav className="flex flex-col space-y-6 mt-10">
-                  <Link
-                    href="/"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-lg hover:text-blue-400 transition-colors"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    href="#features"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-lg hover:text-blue-400 transition-colors"
-                  >
-                    Features
-                  </Link>
-                  <Link
-                    href="#plans"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-lg hover:text-blue-400 transition-colors"
-                  >
-                    Plans
-                  </Link>
-                  <Link
-                    href="#contact"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-lg hover:text-blue-400 transition-colors"
-                  >
-                    Contact Us
-                  </Link>
-                  <Link
-                    href="/profile"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-lg hover:text-blue-400 transition-colors"
-                  >
-                    Profile
-                  </Link>
-                  <div>
-                    <SignInAction />
-                  </div>
-                </nav>
-              </SheetContent>
-            </Sheet>
+            <MobileNavSheet session={!!session} />
           </div>
         </div>
       </div>

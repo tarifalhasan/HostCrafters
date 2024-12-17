@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
@@ -19,7 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jakira.className}  antialiased`}>{children}</body>
+      <body className={`${jakira.className}  antialiased`}>
+        {children}
+
+        <Toaster />
+      </body>
     </html>
   );
 }
