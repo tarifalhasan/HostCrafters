@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="bg-[url('/images/home-hero-bg.png')] bg-center min-h-[90vh] w-full bg-ful bg-no-repeat  bg-cover lg:bg-[100%_100%] pt-24 pb-32 relative overflow-hidden flex items-center">
+    <div className="bg-[url('/images/home-hero-bg.png')] bg-[#F1F5F9] bg-center min-h-[90vh] w-full bg-ful bg-no-repeat  bg-cover lg:bg-[100%_100%] pt-24 pb-32 relative overflow-hidden flex items-center">
       <div className="container relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="w-full lg:w-1/2 space-y-8">

@@ -41,14 +41,14 @@ export default function Pricing() {
   ];
 
   return (
-    <section className="bg-navy-900 py-24" id="plans">
+    <section className="bg-white py-24" id="plans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-12 gap-12 sr-only items-center">
-          <div className="col-span-12 lg:col-span-4">
-            <h2 className="text-3xl font-bold text-white mb-8">
+        <div className="grid grid-cols-12 gap-6  items-center">
+          <div className="col-span-12 lg:col-span-3">
+            <h2 className="text-3xl font-bold text-[#333331] mb-8">
               What&apos;s included?
             </h2>
-            <ul className="space-y-4 text-gray-300">
+            <ul className="space-y-4 text-[#757575] text-base lg:text-lg">
               <li>No Of Websites</li>
               <li>FREE 1 year domain registration</li>
               <li>One-click WordPress installs</li>
@@ -57,7 +57,7 @@ export default function Pricing() {
               <li>Bandwidth & disk space</li>
             </ul>
           </div>
-          <div className="grid col-span-12 lg:col-span-8 md:grid-cols-3 gap-6">
+          <div className="grid col-span-12 lg:col-span-9 md:grid-cols-3 gap-6">
             {plans.map((plan) => (
               <div key={plan.name} className="bg-navy-800 p-6 rounded-lg">
                 <h3 className="text-xl font-bold text-white mb-4">
