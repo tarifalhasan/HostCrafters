@@ -43,7 +43,7 @@ export default function Pricing() {
   return (
     <section className="bg-navy-900 py-24" id="plans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-12 gap-12 sr-only items-center">
           <div className="col-span-12 lg:col-span-4">
             <h2 className="text-3xl font-bold text-white mb-8">
               What&apos;s included?

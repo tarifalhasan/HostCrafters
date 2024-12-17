@@ -4,8 +4,8 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="bg-navy-900 text-white pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+      <div className="container mx-auto">
+        <div className="flex flex-wrap gap-12 mb-12">
           <div>
             <Link href="/" className="flex items-center space-x-2 mb-6">
               <Image

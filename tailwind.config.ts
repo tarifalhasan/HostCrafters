@@ -9,11 +9,19 @@ export default {
   ],
   theme: {
     extend: {
+      container: {
+        center: true,
+        padding: "2rem",
+        screens: {
+          "2xl": "1280px",
+        },
+      },
       colors: {
         navy: {
           800: "#051650",
           900: "#020B2D",
         },
+        highlightOrange: "#FF7700",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
