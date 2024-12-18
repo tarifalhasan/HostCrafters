@@ -1,7 +1,7 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
-
+import { cn } from "@/lib/utils";
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   ({ className, type, ...props }, ref) => {
     return (
@@ -14,9 +14,9 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
         ref={ref}
         {...props}
       />
-    )
+    );
   }
-)
-Input.displayName = "Input"
+);
+Input.displayName = "Input";
 
-export { Input }
+export { Input };

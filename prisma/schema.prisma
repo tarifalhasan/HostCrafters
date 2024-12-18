@@ -40,7 +40,7 @@ model Session {
 }
 
 model Account {
-  id           String    @id
+  id           String    @id @default(cuid())
   accountId    String
   providerId   String
   userId       String
@@ -57,10 +57,14 @@ model Account {
 }
 
 model Verification {
-  id         String   @id
+  id         String   @id @default(cuid())
+
   identifier String
   value      String
   expiresAt  DateTime
+  createdAt  DateTime @default(now()) // Add createdAt field
+  updatedAt  DateTime @updatedAt     // Include updatedAt for consistency
 
   @@map("verification")
 }
+

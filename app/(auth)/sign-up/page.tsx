@@ -11,7 +11,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import LoadingButton from "@/components/loading-button";
 import {
   Form,
   FormControl,
@@ -21,13 +21,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { authClient } from "@/lib/auth-client";
 import { formSchema } from "@/lib/auth-schema";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function SignUp() {
+  const [pending, setPending] = useState(false);
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,22 +51,25 @@ export default function SignUp() {
       },
       {
         onRequest: () => {
-          toast({
-            title: "Please wait...",
-          });
+          setPending(true);
         },
         onSuccess: () => {
-          form.reset();
+          toast({
+            title: "Account created",
+            description:
+              "Your account has been created. Check your email for a verification link.",
+          });
         },
         onError: (ctx) => {
-          toast({ title: ctx.error.message, variant: "destructive" });
-          form.setError("email", {
-            type: "manual",
-            message: ctx.error.message,
+          console.log("error", ctx);
+          toast({
+            title: "Something went wrong",
+            description: ctx.error.message ?? "Something went wrong.",
           });
         },
       }
     );
+    setPending(false);
   }
 
   return (
@@ -120,9 +126,7 @@ export default function SignUp() {
                   </FormItem>
                 )}
               />
-              <Button className="w-full" type="submit">
-                Submit
-              </Button>
+              <LoadingButton pending={pending}>Sign up</LoadingButton>
             </form>
           </Form>
         </CardContent>

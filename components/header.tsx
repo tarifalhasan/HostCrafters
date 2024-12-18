@@ -2,8 +2,8 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import AuthButtons from "./auth-button";
 import MobileNavSheet from "./MobileNavSheet";
-import SignInAction from "./signIn";
 
 export default async function Header() {
   const session = await auth.api.getSession({
@@ -46,7 +46,7 @@ export default async function Header() {
             <Link href="/profile" className="text-white hover:text-blue-400">
               Profile
             </Link>
-            <SignInAction />
+            <AuthButtons />
           </nav>
 
           {/* Mobile Navigation */}

@@ -27,34 +27,25 @@ import { Rocket } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-const formSchema = z
-  .object({
-    // Billing Details
-    firstName: z.string().min(2, "First name must be at least 2 characters"),
-    lastName: z.string().min(2, "Last name must be at least 2 characters"),
-    streetAddress: z.string().min(5, "Please enter a valid street address"),
-    apartment: z.string().optional(),
-    city: z.string().min(2, "Please enter a valid city"),
-    state: z.string().min(2, "Please enter a valid state"),
-    phone: z.string().min(10, "Please enter a valid phone number"),
-    email: z.string().email("Please enter a valid email address"),
+const formSchema = z.object({
+  // Billing Details
+  firstName: z.string().min(2, "First name must be at least 2 characters"),
+  lastName: z.string().min(2, "Last name must be at least 2 characters"),
+  streetAddress: z.string().min(5, "Please enter a valid street address"),
+  apartment: z.string().optional(),
+  city: z.string().min(2, "Please enter a valid city"),
+  state: z.string().min(2, "Please enter a valid state"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
+  email: z.string().email("Please enter a valid email address"),
 
-    // Payment Details
-    paymentMethod: z.string(),
-    cardName: z.string().min(2, "Please enter the name on your card"),
-    cardNumber: z.string().min(16, "Please enter a valid card number"),
-    expiryMonth: z.string().min(2, "MM"),
-    expiryYear: z.string().min(4, "YYYY"),
-    cvv: z.string().min(3, "Please enter a valid CVV"),
-
-    // Sign Up
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+  // Payment Details
+  paymentMethod: z.string(),
+  cardName: z.string().min(2, "Please enter the name on your card"),
+  cardNumber: z.string().min(16, "Please enter a valid card number"),
+  expiryMonth: z.string().min(2, "MM"),
+  expiryYear: z.string().min(4, "YYYY"),
+  cvv: z.string().min(3, "Please enter a valid CVV"),
+});
 
 export function CheckoutForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -343,54 +334,6 @@ export function CheckoutForm() {
         </Collapsible>
 
         {/* Sign Up */}
-        <Collapsible
-          style={{ boxShadow: "0px 0px 40px 0px rgba(0, 0, 0, 0.08)" }}
-          defaultOpen
-          className="bg-white rounded-lg shadow-sm"
-        >
-          <CollapsibleTrigger className="flex w-full items-center justify-between p-6">
-            <h2 className="text-xl font-semibold">Sign-up</h2>
-          </CollapsibleTrigger>
-          <CollapsibleContent className="px-6 pb-6">
-            <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Confirm Password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
 
         <Button
           type="submit"

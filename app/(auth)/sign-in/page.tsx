@@ -11,7 +11,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import LoadingButton from "@/components/loading-button";
 import {
   Form,
   FormControl,
@@ -24,10 +24,15 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { authClient } from "@/lib/auth-client";
 import { signInFormSchema } from "@/lib/auth-schema";
+import { ErrorContext } from "@better-fetch/fetch";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function SignIn() {
+  const [pendingCredentials, setPendingCredentials] = useState(false);
+  const router = useRouter();
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
@@ -42,22 +47,28 @@ export default function SignIn() {
       {
         email,
         password,
-        callbackURL: "/dashboard",
+        callbackURL: "/",
       },
       {
         onRequest: () => {
-          toast({
-            title: "Please wait...",
-          });
+          setPendingCredentials(true);
+          router.push("/");
+          router.refresh();
         },
         onSuccess: () => {
           form.reset();
         },
-        onError: (ctx) => {
-          alert(ctx.error.message);
+        onError: (ctx: ErrorContext) => {
+          console.log(ctx);
+          toast({
+            title: "Something went wrong",
+            description: ctx.error.message ?? "Something went wrong.",
+            variant: "destructive",
+          });
         },
       }
     );
+    setPendingCredentials(false);
   }
 
   return (
@@ -103,20 +114,28 @@ export default function SignIn() {
                   </FormItem>
                 )}
               />
-              <Button className="w-full" type="submit">
-                Submit
-              </Button>
+              <LoadingButton pending={pendingCredentials}>
+                Sign in
+              </LoadingButton>
             </form>
           </Form>
         </CardContent>
 
-        <CardFooter className="flex justify-center">
+        <CardFooter className="flex flex-col justify-center">
           <p className="text-sm text-muted-foreground">
             Don&apos;t have an account yet?{" "}
             <Link href="/sign-up" className="text-primary hover:underline">
               Sign up
             </Link>
           </p>
+          <div className="mt-4 text-center text-sm">
+            <Link
+              href="/forgot-password"
+              className="text-primary hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
         </CardFooter>
       </Card>
     </div>
