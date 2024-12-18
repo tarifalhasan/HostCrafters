@@ -52,11 +52,12 @@ export default function SignIn() {
       {
         onRequest: () => {
           setPendingCredentials(true);
-          router.push("/");
+
           router.refresh();
         },
         onSuccess: () => {
           form.reset();
+          router.push("/");
         },
         onError: (ctx: ErrorContext) => {
           console.log(ctx);
