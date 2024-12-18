@@ -5,10 +5,7 @@
       "use": "@vercel/next"
     }
   ],
-  "build": {
-    "env": {
-      "DATABASE_URL": "postgresql://neondb_owner:cvH7kGfF5iKR@ep-divine-cell-a5bixo0k.us-east-2.aws.neon.tech/neondb?sslmode=require"
-    },
-    "commands": ["npx prisma generate", "next build"]
+  "env": {
+    "DATABASE_URL": "postgresql://neondb_owner:cvH7kGfF5iKR@ep-divine-cell-a5bixo0k.us-east-2.aws.neon.tech/neondb?sslmode=require"
   }
 }
