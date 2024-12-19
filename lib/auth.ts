@@ -2,7 +2,6 @@ import { resend } from "@/actions/resend";
 import { reactResetPasswordEmail } from "@/actions/reset-password";
 import { betterAuth, BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { openAPI } from "better-auth/plugins";
 import prisma from "./prisma";
 const from = process.env.BETTER_AUTH_EMAIL || "tarifalhasanjs@gmail.com";
 const to = process.env.TEST_EMAIL || "";
@@ -34,7 +33,7 @@ export const auth = betterAuth({
     },
   },
 
-  plugins: [openAPI()], // api/auth/reference
+  // plugins: [openAPI()], // api/auth/reference
   emailVerification: {
     async sendVerificationEmail({ user, url }) {
       const res = await resend.emails.send({
